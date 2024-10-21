@@ -1,0 +1,48 @@
+# Template PHP Build
+
+# This template allows you to validate your PHP application.
+# The workflow allows running tests and code linting on the default branch.
+
+# image: composer:2.0
+
+# pipelines:
+#   default:
+#     - parallel:
+#         - step:
+#             name: Test
+#             script:
+#               - composer install
+#               -  ./vendor/bin/phpunit test
+#             caches:
+#               - composer
+#         - step:
+#             name: Lint
+#             script:
+#               - composer install
+#               - ./vendor/bin/phplint . --exclude=vendor
+#             caches:
+#               - composer
+
+image: php:8.2-cli
+pipelines:
+  branches:
+    main:
+      - step:
+          name: Install Dependencies
+          caches:
+            - composer
+          script:
+            - echo "Installing PHP Extensions and Dependencies"
+            # - apt-get update && apt-get install -y zip unzip git
+            # - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+            # - echo "Installing Composer Dependencies"
+            # - COMPOSER_ALLOW_SUPERUSER=1 composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
+      - step:
+          name: Deploy to Server
+          script:
+            - echo "Deploying to server"
+            - apt-get update && apt-get install -y sshpass
+            # - sshpass -p 'Br!ll!@nt-B@cKb0n!@Lt#' ssh -o StrictHostKeyChecking=no root@103.209.40.89 "ll"
+            - sshpass -p 'Br!ll!@nt-B@cKb0n!@Lt#' ssh -o StrictHostKeyChecking=no root@103.209.40.89 "mkdir -p /root/crm/test/crm-backend"
+            # - sshpass -p 'Br!ll!@nt-B@cKb0n!@Lt#' rsync -avz --delete --exclude='.env' --exclude='storage/' --exclude='vendor/' ./ root@103.209.40.89:/var/www/saas1
+            - sshpass -p 'Br!ll!@nt-B@cKb0n!@Lt#' ssh -o StrictHostKeyChecking=no root@103.209.40.89 " cd /root/crm/test/crm-backend && ls -la && docker rm -f crm-backend_cicd-crm-service_1 && chmod  +x script.sh && sh script.sh "
