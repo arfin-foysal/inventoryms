@@ -1,5 +1,4 @@
-## BacBon CRM (Customer Relationship Management)
-## Develop By: [BacBon Limited](https://bacbonltd.com/)
+## Inventory Management System
 
 ## Developer Team 
 - [Foysal Ahmad](https://linkedin.com/in/arfinfoysal/)
@@ -10,7 +9,7 @@
 - User Management
 - Role Management
 - Permission Management
-- CRM Functionality
+- Stock inventory Functionality
 - API Documentation
 - Swagger API Documentation
 - Docker Support
